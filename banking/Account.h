@@ -15,7 +15,7 @@ class Account {
 
   // Virtual to test.
   virtual void Unlock();
-  int id() const { return id_; }
+  virtual int id() const { return id_; }
 
  private:
   int id_;
