@@ -14,7 +14,7 @@ public:
   MOCK_METHOD(void, Unlock, (), (override));
 };
 
-class MockTransaction : public Trannsaction {
+class MockTransaction : public Transaction {
   MockTransaction() : Transaction(){};
   MOCK_METHOD(bool, Make, (Account&, Account&, int), (override));
   MOCK_METHOD(int, fee, (), (const, override));
