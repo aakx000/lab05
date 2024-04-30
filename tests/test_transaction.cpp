@@ -20,7 +20,7 @@ public:
   MOCK_METHOD(bool, Make, (Account&, Account&, int), (override));
   MOCK_METHOD(int, fee, (), (const, override));
   MOCK_METHOD(void, set_fee, (int), (override));
-}
+};
 
 TEST(Transaction, Init) {
   MockTransaction tr;
@@ -29,8 +29,8 @@ TEST(Transaction, Init) {
 
 TEST(Transaction, Make) {
   MockTransaction tr;
-  MockAccount ac_from;
-  MockAccount ac_to;
+  MockAccount ac_from(1, 1000);
+  MockAccount ac_to(2, 1000);
   tr.set_fee(10);
   EXPECT_EQ(tr.fee(), 10);
   tr.set_fee(1);
