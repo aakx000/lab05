@@ -19,7 +19,7 @@ TEST(Account, Init) {
   EXPECT_EQ(ac.id(), 12);
 }
 
-TEST(Account, ChangeBalance, Unlock) {
+TEST(Account, ChangeBalance) {
   MockAccount ac(12, 100);
   EXPECT_THROW(ac.ChangeBalance(20), std::runtime_error);
   ac.Lock();
@@ -28,14 +28,14 @@ TEST(Account, ChangeBalance, Unlock) {
   ac.ChangeBalance(-30);
   EXPECT_EQ(ac.GetBalance(), 90);
   ac.Unlock();
-  EXPECT_EQ(ac.ChangeBalance(20), std::runtime_error);
+  EXPECT_THROW(ac.ChangeBalance(20), std::runtime_error);
 }
 
 TEST(Account, Lock) {
   MockAccount ac(12, 100);
   ac.Unlock();
   ac.Lock();
-  EXPECT_EQ(ac.Lock(), std::runtime_error);
+  EXPECT_THROW(ac.Lock(), std::runtime_error);
 }
 
 
