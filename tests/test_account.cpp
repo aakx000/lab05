@@ -17,8 +17,8 @@ TEST(Account, Init) {
   MockAccount ac(12, 100);
   EXPECT_CALL(ac, GetBalance());
   EXPECT_CALL(ac, id());
-  EXPECT_EQ(ac.Account::GetBalance(), 100);
-  EXPECT_EQ(ac.MockAccount::id(), 12);
+  EXPECT_EQ(ac.GetBalance(), 100);
+  EXPECT_EQ(ac.id(), 12);
 }
 
 TEST(Account, ChangeBalance) {
