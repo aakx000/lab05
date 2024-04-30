@@ -15,6 +15,8 @@ public:
 
 TEST(Account, Init) {
   MockAccount ac(12, 100);
+  EXPECT_CALL(ac, GetBalance());
+  EXPECT_CALL(ac, id());
   EXPECT_EQ(ac.GetBalance(), 100);
   EXPECT_EQ(ac.id(), 12);
 }
