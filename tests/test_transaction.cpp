@@ -15,6 +15,7 @@ public:
 };
 
 class MockTransaction : public Transaction {
+public:
   MockTransaction() : Transaction(){};
   MOCK_METHOD(bool, Make, (Account&, Account&, int), (override));
   MOCK_METHOD(int, fee, (), (const, override));
