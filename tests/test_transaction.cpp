@@ -46,8 +46,8 @@ TEST(Transaction, Make) {
   EXPECT_THROW(tr.Transaction::Make(ac_from, ac_from, 150), std::logic_error);
   EXPECT_THROW(tr.Transaction::Make(ac_from, ac_to, -50), std::invalid_argument);
   EXPECT_THROW(tr.Transaction::Make(ac_from, ac_to, 50), std::logic_error);
-  tr.Transaction::set_fee(50);
-  EXPECT_EQ(tr.Transaction::Make(ac_from, ac_to, 98), false);
+  tr.Transaction::set_fee(60);
+  EXPECT_EQ(tr.Transaction::Make(ac_from, ac_to, 118), false);
   tr.Transaction::set_fee(1);
   ac_from.Account::Lock();
   EXPECT_THROW(tr.Transaction::Make(ac_from, ac_to, 150), std::runtime_error);
