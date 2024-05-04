@@ -6,11 +6,11 @@
 class MockAccount: public Account {
 public:
   MockAccount(int id, int balance): Account(id, balance){}
-  MOCK_METHOD(int, id, (), (const, override));
-  MOCK_METHOD(int, GetBalance, (), (const, override));
-  MOCK_METHOD(void, ChangeBalance, (int), (override));
-  MOCK_METHOD(void, Lock, (), (override));
-  MOCK_METHOD(void, Unlock, (), (override));
+  MOCK_CONST_METHOD0(id, int());
+  MOCK_CONST_METHOD0(GetBalance, int());
+  MOCK_METHOD1(ChangeBalance, void(int));
+  MOCK_METHOD0(Lock, void());
+  MOCK_METHOD0(Unlock, void());
 };
 
 TEST(Account, Init) {
@@ -23,6 +23,10 @@ TEST(Account, Init) {
 
 TEST(Account, ChangeBalance) {
   MockAccount ac(12, 100);
+  EXPECT_CALL(ac, ChangeBalance(testing::_)).Times(4);
+  EXPECT_CALL(ac, Lock()).Times(4);
+  EXPECT_CALL(ac, GetBalance()).Times(2);
+  EXPECT_CALL(ac, Unlock());
   EXPECT_THROW(ac.ChangeBalance(20), std::runtime_error);
   ac.Lock();
   ac.ChangeBalance(20);
@@ -35,6 +39,8 @@ TEST(Account, ChangeBalance) {
 
 TEST(Account, Lock) {
   MockAccount ac(12, 100);
+  EXPECT_CALL(ac, Unlock());
+  EXPECT_CALL(ac, Lock()).Times(2);
   ac.Unlock();
   ac.Lock();
   EXPECT_THROW(ac.Lock(), std::runtime_error);

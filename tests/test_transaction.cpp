@@ -7,23 +7,24 @@
 class MockAccount: public Account {
 public:
   MockAccount(int id, int balance): Account(id, balance){}
-  MOCK_METHOD(int, id, (), (const, override));
-  MOCK_METHOD(int, GetBalance, (), (const, override));
-  MOCK_METHOD(void, ChangeBalance, (int), (override));
-  MOCK_METHOD(void, Lock, (), (override));
-  MOCK_METHOD(void, Unlock, (), (override));
+  MOCK_CONST_METHOD0(id, int());
+  MOCK_CONST_METHOD0(GetBalance, int());
+  MOCK_METHOD1(ChangeBalance, void(int));
+  MOCK_METHOD0(Lock, void());
+  MOCK_METHOD0(Unlock, void());
 };
 
 class MockTransaction : public Transaction {
 public:
   MockTransaction() : Transaction(){};
-  MOCK_METHOD(bool, Make, (Account&, Account&, int), (override));
-  MOCK_METHOD(int, fee, (), (const, override));
-  MOCK_METHOD(void, set_fee, (int), (override));
+  MOCK_METHOD3(Make, bool(Account&, Account&, int));
+  MOCK_CONST_METHOD0(fee, int());
+  MOCK_METHOD1(set_fee, void(int));
 };
 
 TEST(Transaction, Init) {
   MockTransaction tr;
+  EXPECT_CALL(tr, fee());
   EXPECT_EQ(tr.fee(), 1);
 }
 
@@ -31,6 +32,14 @@ TEST(Transaction, Make) {
   MockTransaction tr;
   MockAccount ac_from(1, 1000);
   MockAccount ac_to(2, 1000);
+  EXPECT_CALL(tr, set_fee(testing::_)).Times(4);
+  EXPECT_CALL(tr, fee()).Times(2);
+  EXPECT_CALL(tr, Make(testing::_, testing::_, testing::_)).Times(7);
+  EXPECT_CALL(ac_from, Lock()).Times(2);
+  EXPECT_CALL(ac_from, ChangeBalance(testing::_)).Times(2);
+  EXPECT_CALL(ac_from, Unlock()).Times(2);
+  EXPECT_CALL(ac_from, GetBalance()).Times(2);
+  EXPECT_CALL(ac_to, GetBalance()).Times(2);
   tr.set_fee(10);
   EXPECT_EQ(tr.fee(), 10);
   tr.set_fee(1);
