@@ -46,11 +46,6 @@ jobs:
     with:
       github-token: ${{ secrets.GITHUB_TOKEN }}
       path-to-lcov: ${{ github.workspace }}/coverage.info
-
-  - name: Publish to coveralls.io
-    uses: coverallsapp/github-action@v1.1.2
-    with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
   
   
   
