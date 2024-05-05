@@ -17,9 +17,9 @@ public:
 class MockTransaction : public Transaction {
 public:
   MockTransaction() : Transaction(){}
-  MOCK_METHOD3(Make, bool(Account&, Account&, int));
-  MOCK_CONST_METHOD0(fee, int());
-  MOCK_METHOD1(set_fee, void(int));
+  // MOCK_METHOD3(Make, bool(Account&, Account&, int));
+  // MOCK_CONST_METHOD0(fee, int());
+  // MOCK_METHOD1(set_fee, void(int));
 };
 
 TEST(Transaction, Init) {
